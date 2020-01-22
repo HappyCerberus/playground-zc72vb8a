@@ -234,3 +234,16 @@ We scan through all the elements of the array and at worst case we will insert e
 
 ## Complex solution $`O(n)`$
 
+First observation to notice is that if we know the $`k`$-th element, getting the top $`k`$ elements is a simple scan through the array with $`O(n)`$ complexity.
+
+So, what is the extra work that we are doing while trying to find the $`k`$-th element?
+
+It is the sorting. To get to the $`k`$-th element we really don't care about the order of any other elements in the array. We just want to find this one element. What we need is to end up in a situation where the array is partitioned around the $`k`$-th element, with $`k-1`$ bigger elements to its left and all the smaller elements to its right (with no required particular order).
+
+You should know an algorithm that relies on partitioning around a pivot, it's quicksort.
+
+Let's recall what quicksort does. It recursively partitions the array around pivots each time into two parts, one part with the elements higher than the pivot one part with the elements lower than the pivot.
+
+We don't need the full power of quicksort, we only need to recurse into the partition that we know contains our $`k`$-th element. This would give us $`O(n+\frac{n}{2}+\frac{n}{4}...)`$ complexity. Unfortunately, that would represent the average case, not the worst case. If we choose our pivot poorly, we go back to $`O(n^2)`$ complexity.
+
+
