@@ -147,6 +147,12 @@ int main() {
 // }
 ```
 
+## Medium solution with $`O(k)`$ space complexity
+
+One problem with the previous straightforward solution is that we still need to make copy of the entire array, since ``partial_sort` is still destructive, leaving us with $`O(n)`$ space complexity.
+
+Since we are only interested in the top $`k`$ elements, we can keep a running top $`k`$ elements as we scan through the array. We need to be careful and pick our data structure carefully. We want each insertion and removal from the data structure to be $`O(log(k))`$. Fortunately there is one datastructure that provides these performance characteristics, a heap. In C++ we can use the ``priority_queue`` (not necessarily implemented as heap, but providing the same performance characteristics).
+
 ```C++ runnable
 // { autofold
 #include <iostream>
