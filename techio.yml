@@ -1,4 +1,4 @@
-title: Simple C++ Template
+title: Common Coding Interview Questions
 plan:
-- title: C++ Snippet
-  statement: statement.md
+- title: Top k elements and k-th element
+  statement: 001-topk.md
