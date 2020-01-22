@@ -1,6 +1,7 @@
-# Welcome!
+# Top $`k`$ elements and $`k`$-th element
 
-This C++ template lets you get started quickly with a simple one-page playground.
+Two twists on the same idea that show up frequently in coding interviews in various incarnations.
+
 
 ```C++ runnable
 #include <iostream>
