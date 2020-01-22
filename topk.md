@@ -246,6 +246,6 @@ Let's recall what quicksort does. It recursively partitions the array around piv
 
 We don't need the full power of quicksort, we only need to recurse into the partition that we know contains our $`k`$-th element. This would give us $`O(n+\frac{n}{2}+\frac{n}{4}...)`$ complexity. Unfortunately, that would represent the average case, not the worst case. If we choose our pivot poorly, we go back to $`O(n^2)`$ complexity.
 
-Fortunately there is an algorithm that allows us to choose a good enough pivot in $`O(n)`$ time, it is called median of medians. The complexity analysis of this beast is mind bending so lets just jump to the code.
+Fortunately there is an algorithm that allows us to choose a good enough pivot in $`O(n)`$ time, it is called median of medians. If you are interested in the proof why this algorithm is indeed $`O(n)`$, I would recommend [these MIT materials](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-design-and-analysis-of-algorithms-spring-2012/lecture-notes/MIT6_046JS12_lec01.pdf).
 
 
