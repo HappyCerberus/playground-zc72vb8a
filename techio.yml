@@ -1,4 +1,4 @@
-title: Common Coding Interview Questions
+title: Common Coding Interview Questions: top k & k-th element
 plan:
 - title: Top k elements and k-th element
-  statement: 001-topk.md
+  statement: topk.md
