@@ -230,4 +230,7 @@ int main() {
 
 ### Complexity analysis of medium solution
 
-We scan through all the elements of the array and at worst case we will insert each of them into the ``priority_queue``. This leads to total $`O(n*2*log(k)`$ complexity ($`n`$ calls of push() & pop(), each with $`log(k)`$ complexity), ultimately collapsing to $`O(n*log(k))`$. As already discussed the space complexity of this approach is $`O(k)`$.
+We scan through all the elements of the array and at worst case we will insert each of them into the ``priority_queue``. This leads to total $`O(n*2*log(k)`$ complexity ($`n`$ calls of ``push()`` & ``pop()``, each with $`log(k)`$ complexity), ultimately collapsing to $`O(n*log(k))`$. As already discussed the space complexity of this approach is $`O(k)`$.
+
+## Complex solution $`O(n)`$
+
