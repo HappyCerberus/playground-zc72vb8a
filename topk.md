@@ -80,7 +80,7 @@ int main() {
 
 ### Complexity analysis of trivial solution
 
-We sort the array, which has $`n`$ elements resulting in $`O(n*log(n)`$ complexity.
+We sort the array, which has $`n`$ elements resulting in $`O(n*log(n))`$ complexity.
 Since sorting is a destructive operation we also need to create a copy of the array resulting in $`O(n)`$ space complexity.
 
 ## Medium solution $`O(n*log(k))`$
@@ -245,5 +245,7 @@ You should know an algorithm that relies on partitioning around a pivot, it's qu
 Let's recall what quicksort does. It recursively partitions the array around pivots each time into two parts, one part with the elements higher than the pivot one part with the elements lower than the pivot.
 
 We don't need the full power of quicksort, we only need to recurse into the partition that we know contains our $`k`$-th element. This would give us $`O(n+\frac{n}{2}+\frac{n}{4}...)`$ complexity. Unfortunately, that would represent the average case, not the worst case. If we choose our pivot poorly, we go back to $`O(n^2)`$ complexity.
+
+Fortunately there is an algorithm that allows us to choose a good enough pivot in $`O(n)`$ time, it is called median of medians. The complexity analysis of this beast is mind bending so lets just jump to the code.
 
 
