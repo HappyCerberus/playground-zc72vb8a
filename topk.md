@@ -245,18 +245,20 @@ We scan through all the elements of the array and at worst case we will insert e
 
 ## Complex solution $`O(n)`$
 
-First observation to notice is that if we know the $`k`$-th element, getting the top $`k`$ elements is a simple scan through the array with $`O(n)`$ complexity.
+First observation to notice is that if we know the $`k`$-th element, getting the top $`k`$ elements is a simple scan through the array with $`O(n)`$ complexity. So let's just concentrate on solving the $`k`$-th element in $`O(n)`$ time.
 
-So, what is the extra work that we are doing while trying to find the $`k`$-th element?
+Let's imagine that would believe in our luck and just blindly guess that a particular element is the $`k`$-the element. How would we verify that? If we use this element as a pivot and partition the array around it, we end up with all the bigger elements on its left and all the smaller elements on its left. If the picked element ends up on the $`k`$-th position, we know that our guess was correct.
 
-It is the sorting. To get to the $`k`$-th element we really don't care about the order of any other elements in the array. We just want to find this one element. What we need is to end up in a situation where the array is partitioned around the $`k`$-th element, with $`k-1`$ bigger elements to its left and all the smaller elements to its right (with no required particular order).
+What happens if we weren't correct? Well, we know on which side of the pivot our $`k`$-the element lies at least. If the pivot ended up on a position $`i<k`$ then we need to search the elements to the right of the pivot, if it ended up on a position $`i>k`$, we need to search to the left.
 
-You should know an algorithm that relies on partitioning around a pivot, it's quicksort.
+This might sound very similar to the Quicksort algorithm and indeed, this is referred to as the Quickselect algorithm.
 
-Let's recall what quicksort does. It recursively partitions the array around pivots each time into two parts, one part with the elements higher than the pivot one part with the elements lower than the pivot.
+There is one more important step however. You might recall that Quicksort with a random pivot is $`O(n^2)`$ in worst case. Quickselect suffers the same faith unfortunately.
 
-We don't need the full power of quicksort, we only need to recurse into the partition that we know contains our $`k`$-th element. This would give us $`O(n+\frac{n}{2}+\frac{n}{4}...)`$ complexity. Unfortunately, that would represent the average case, not the worst case. If we choose our pivot poorly, we go back to $`O(n^2)`$ complexity.
+There is one algorithm however that might save us.
 
-Fortunately there is an algorithm that allows us to choose a good enough pivot in $`O(n)`$ time, it is called median of medians. If you are interested in the proof why this algorithm is indeed $`O(n)`$, I would recommend [these MIT materials](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-design-and-analysis-of-algorithms-spring-2012/lecture-notes/MIT6_046JS12_lec01.pdf).
+### Median of medians
+
+The source for the worst case of Quickselect is a corner case when we keep choosing either the smallest or the largest element as our pivot. In that case we only improve the situation by one element, recursing over $`n+(n-1)+(n-2)... ~ n^2`$ elements.
 
 
