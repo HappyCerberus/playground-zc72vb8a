@@ -261,4 +261,4 @@ There is one algorithm however that might save us.
 
 The source for the worst case of Quickselect is a corner case when we keep choosing either the smallest or the largest element as our pivot. In that case we only improve the situation by one element, recursing over $`n+(n-1)+(n-2)...`$ elements which ends up in the $`O(n^2)`$ class.
 
-What if we could pick the pivot somewhat well. Let's say that we always pick a pivot that splits that array in such a way that the larger portion has $`q*n; q < 1`$ elements. Now the recursive pattern would be a geometric progression of $`n + q*n + q^2*n...`$ Sum of such progression is $`\sum_1^n q^i*n = n*\frac{1-q^n}{1-q}`$.
+What if we could pick the pivot somewhat well. Let's say that we always pick a pivot that splits that array in such a way that the larger portion has $`q*n; q < 1`$ elements. Now the recursive pattern would be a geometric progression of $`n + q*n + q^2*n...`$ Sum of such progression is $`\sum_1^n q^i*n = n*\frac{1-q^n}{1-q}`$. For all $`q < 1`$ the right side of the sum ends up a constant number as $`q^n < 1`$.
