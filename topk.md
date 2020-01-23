@@ -277,16 +277,16 @@ The core idea of the median of medians is to process the array in chunks of 5 el
 using namespace std;
 // }
 size_t median_of_medians(vector<int>& v, size_t l, size_t r);
-size_t partition_3way(vector<int>& v, size_t l, size_t r, size_t p, size_t n);
+size_t partition_3way(vector<int>& v, size_t l, size_t r, size_t p, size_t k);
 
-size_t select(vector<int>& v, size_t l, size_t r, size_t n) {
+size_t select(vector<int>& v, size_t l, size_t r, size_t k) {
         while (l != r) {
                 size_t p = median_of_medians(v, l, r);
-                p = partition_3way(v, l, r, p, n);
+                p = partition_3way(v, l, r, p, k);
 
-                if (n == p)
-                        return n;
-                else if (n < p)
+                if (k == p)
+                        return k;
+                else if (k < p)
                         r = p - 1;
                 else
                         l = p + 1;
@@ -294,7 +294,7 @@ size_t select(vector<int>& v, size_t l, size_t r, size_t n) {
         return l;
 }
 
-size_t partition_3way(vector<int>& v, size_t l, size_t r, size_t p, size_t n) {
+size_t partition_3way(vector<int>& v, size_t l, size_t r, size_t p, size_t k) {
         int value = v[p];
         swap(v[p], v[r]);
 
@@ -320,9 +320,9 @@ size_t partition_3way(vector<int>& v, size_t l, size_t r, size_t p, size_t n) {
         swap(v[r],v[storeEq]);
 
         // If our target is within the smaller elements, we return the index right after all the smaller elements.
-        if (n < store) return store;
+        if (k < store) return store;
         // If our target is within the equal elements, we return the target.
-        if (n <= storeEq) return n;
+        if (k <= storeEq) return k;
         // Otherwise our target is within the larger elements, we return the index right after all the equal elements.
         return storeEq;
 }
