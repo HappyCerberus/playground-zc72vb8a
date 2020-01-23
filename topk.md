@@ -247,7 +247,7 @@ We scan through all the elements of the array and at worst case we will insert e
 
 First observation to notice is that if we know the $`k`$-th element, getting the top $`k`$ elements is a simple scan through the array with $`O(n)`$ complexity. So let's just concentrate on solving the $`k`$-th element in $`O(n)`$ time.
 
-Let's imagine that would believe in our luck and just blindly guess that a particular element is the $`k`$-the element. How would we verify that? If we use this element as a pivot and partition the array around it, we end up with all the bigger elements on its left and all the smaller elements on its left. If the picked element ends up on the $`k`$-th position, we know that our guess was correct.
+Let's imagine that would believe in our luck and just blindly guess that a particular element is the $`k`$-the element. How would we verify that? If we use this element as a pivot and partition the array around it, we end up with all the bigger elements to its left and all the smaller elements to its right. If the picked element ends up on the $`k`$-th position, we know that our guess was correct (if the array has all unique elements).
 
 What happens if we weren't correct? Well, we know on which side of the pivot our $`k`$-the element lies at least. If the pivot ended up on a position $`i<k`$ then we need to search the elements to the right of the pivot, if it ended up on a position $`i>k`$, we need to search to the left.
 
