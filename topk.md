@@ -381,3 +381,7 @@ int main() {
 // }
 ```
 
+### Complexity analysis of complex solution
+
+As already mentioned, due to the smart choice of our median, the time complexity is $`O(n)`$. Space complexity is $`O(n)`$ as this is a destructive method and we need to make a copy of the array.
+
