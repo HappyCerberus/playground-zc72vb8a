@@ -263,6 +263,6 @@ The source for the worst case of Quickselect is a corner case when we keep choos
 
 What if we could pick the pivot somewhat well. Let's say that we always pick a pivot that splits that array in such a way that the larger portion has $`q*n; q < 1`$ elements. Now the recursive pattern would be a geometric progression of $`n + q*n + q^2*n...`$ Sum of such progression is $`\sum_1^n q^i*n = n*\frac{1-q^n}{1-q}`$. For all $`q < 1`$ the right side of the sum ends up a constant number as we can bound it bellow $`\frac{1}{1-q}`$.
 
-The full complexity analysis of the entire solution is a bit more involved, as we need to take into account also the operations done by the median of medians algorithm.
+The core idea of the median of medians is to process the array in chunks of 5 elements and pick medians from these 5 element sub-arrays. Due to the constant size, picking each of these medians is $`O(1)`$. Once we have all the $`\frac{n}{5}`$ medians, we then recursively apply the Quickselect algorithm to pick a median from these elements. The median (for size 5) has a nice property of splitting the array into at worst $`\frac{3}{10}`$ and $`\frac{7}{10}`$ chunks.
 
 
