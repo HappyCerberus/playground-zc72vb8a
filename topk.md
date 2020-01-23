@@ -245,9 +245,9 @@ We scan through all the elements of the array and at worst case we will insert e
 
 ## Complex solution $`O(n)`$
 
-First observation to notice is that if we know the $`k`$-th element, getting the top $`k`$ elements is a simple scan through the array with $`O(n)`$ complexity. So let's just concentrate on solving the $`k`$-th element in $`O(n)`$ time.
+First observation is that if we know the $`k`$-th element, getting the top $`k`$ elements is a simple scan through the array with $`O(n)`$ complexity. So let's just concentrate on solving the $`k`$-th element in $`O(n)`$ time.
 
-Let's imagine that would believe in our luck and just blindly guess that a particular element is the $`k`$-the element. How would we verify that? If we use this element as a pivot and partition the array around it, we end up with all the bigger elements to its left and all the smaller elements to its right. If the picked element ends up on the $`k`$-th position, we know that our guess was correct (if the array has all unique elements).
+What would happen if we would just blindly guess that a particular element is the $`k`$-the element. How would we verify that? If we use this element as a pivot and partition the array around it, we end up with all the bigger elements to its left and all the smaller elements to its right. If the picked element ends up on the $`k`$-th position, we know that our guess was correct (if the array has all unique elements).
 
 What happens if we weren't correct? Well, we know on which side of the pivot our $`k`$-the element lies at least. If the pivot ended up on a position $`i<k`$ then we need to search the elements to the right of the pivot, if it ended up on a position $`i>k`$, we need to search to the left.
 
@@ -255,7 +255,7 @@ This might sound very similar to the Quicksort algorithm and indeed, this is ref
 
 There is one more important step however. You might recall that Quicksort with a random pivot is $`O(n^2)`$ in worst case. Quickselect suffers the same faith unfortunately.
 
-There is one algorithm however that might save us.
+To fix this we need the median of medians algorithm.
 
 ### Median of medians
 
@@ -265,4 +265,119 @@ What if we could pick the pivot somewhat well. Let's say that we always pick a p
 
 The core idea of the median of medians is to process the array in chunks of 5 elements and pick medians from these 5 element sub-arrays. Due to the constant size, picking each of these medians is $`O(1)`$. Once we have all the $`\frac{n}{5}`$ medians, we then recursively apply the Quickselect algorithm to pick a median from these elements. The median (for size 5) has a nice property of splitting the array into at worst $`\frac{3}{10}`$ and $`\frac{7}{10}`$ chunks.
 
+```C++ runnable
+// { autofold
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <iterator>
+#include <random>
+#include <chrono>
+#include <queue>
+using namespace std;
+// }
+size_t median_of_medians(vector<int>& v, size_t l, size_t r);
+size_t partition_3way(vector<int>& v, size_t l, size_t r, size_t p, size_t n);
+
+size_t select(vector<int>& v, size_t l, size_t r, size_t n) {
+        while (l != r) {
+                size_t p = median_of_medians(v, l, r);
+                p = partition_3way(v, l, r, p, n);
+
+                if (n == p)
+                        return n;
+                else if (n < p)
+                        r = p - 1;
+                else
+                        l = p + 1;
+        }
+        return l;
+}
+
+size_t partition_3way(vector<int>& v, size_t l, size_t r, size_t p, size_t n) {
+        int value = v[p];
+        swap(v[p], v[r]);
+
+        // Find elements smaller than pivot and move them to the begining of this section.
+        size_t store = l;
+        for (size_t i = l; i < r; i++) {
+                if (v[i] > value) {
+                        swap(v[store],v[i]);
+                        store++;
+                }
+        }
+
+        // Find elements equal to the pivot (to handle repeated values) right after elements smaller than pivot.
+        size_t storeEq = store;
+        for (size_t i = store; i < r; i++) {
+                if (v[i] == value) {
+                        swap(v[storeEq], v[i]);
+                        storeEq++;
+                }
+        }
+
+        // Move the pivot right after the elements equal to it.
+        swap(v[r],v[storeEq]);
+
+        // If our target is within the smaller elements, we return the index right after all the smaller elements.
+        if (n < store) return store;
+        // If our target is within the equal elements, we return the target.
+        if (n <= storeEq) return n;
+        // Otherwise our target is within the larger elements, we return the index right after all the equal elements.
+        return storeEq;
+}
+
+size_t median_of_medians(vector<int>& v, size_t l, size_t r) {
+        if (r-l < 5) {
+                // Sort the constant size array.
+                sort(begin(v)+l, begin(v)+r, greater<int>());
+                // Simply return median, since we have just one array.
+                return (l + r) / 2;
+        }
+
+        for (size_t i = l; i < r; i+=5) {
+                size_t r_new = min(i+4, r);
+                // Sort the constant size array.
+                sort(begin(v)+i, begin(v)+r_new, greater<int>());
+
+                // Move the newly calculate median to the front of this section.
+                size_t med = (i+r_new)/2;
+                swap(v[med], v[l+(i-l)/5]);
+        }
+
+        // Recurse to get median of medians.
+        size_t mid = (r-l)/10 + l + 1;
+        return select(v, l, l+(r-l)/5, mid);
+}
+
+
+
+int complex_kth(vector<int> v, size_t k) {
+        return v[select(v,0,v.size()-1,k-1)];
+}
+// { autofold
+int main() {
+        // demo code
+        cout << "Generating random array." << endl;
+        auto seed = chrono::system_clock::now().time_since_epoch().count();
+        default_random_engine dre(seed);
+        uniform_int_distribution<int> di(0,1000);
+
+        vector<int> v(50);
+        generate(begin(v), end(v), [&]{ return di(dre); });
+
+        copy(begin(v), end(v), ostream_iterator<int>(cout, " "));
+        cout << endl << endl;
+
+        // complex solution
+        {
+                int kth = complex_kth(v, 5);
+                cout << "Result of medium_kth(v, 5):" << endl;
+                cout << kth;
+                cout << endl;
+        }
+
+}
+// }
+```
 
