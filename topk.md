@@ -89,7 +89,7 @@ Since sorting is a destructive operation we also need to create a copy of the ar
 
 ## Medium solution $`O(n*log(k))`$
 
-When we consider optimizations, we need to look at the unnecessary work we are doing. Since we do not care about the elements besides the top $`k`$ we do not need to sort them. The standard library already offers an appropriate function ``partial_sort`` with the complexity $`O(n*log(k))`$.
+When we consider optimizations, we need to look at the unnecessary work we are doing. Since we do not care about the elements besides the top $`k`$ we do not need to sort them. The standard library already offers an appropriate function ``partial_sort``.
 
 ```C++ runnable
 // { autofold
@@ -150,6 +150,11 @@ int main() {
 }
 // }
 ```
+
+### Complexity analysis of partial sort solution
+
+Time complexity of ``partial_sort`` is $`O(n*log(k))`$.
+We are still copying the array, so space complexity remains unchanged at $`O(n)`$.
 
 ## Medium solution with $`O(k)`$ space complexity
 
