@@ -387,6 +387,10 @@ As already mentioned, due to the smart choice of our median, the time complexity
 
 ***
 
+Next: [$`O(1)`$ data structure](https://tech.io/playgrounds/52828/common-coding-interview-questions-o1-data-structure) 
+
+***
+
 [![CC-BY-SA](https://i.creativecommons.org/l/by-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-sa/4.0/)
 
 This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/).
